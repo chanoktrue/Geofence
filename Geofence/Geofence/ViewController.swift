@@ -21,7 +21,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(map)
         
-
         LocationManager.shared.getUserLocation { [weak self] location in
             guard let strongSelf = self else {
                 return
@@ -31,11 +30,14 @@ class ViewController: UIViewController {
             strongSelf.addMapPin(location: location)
             
             // MARK: - Geofence
-            LocationManager.shared.addGeofence(location: location, radius: 3000)
+            LocationManager.shared.addGeofence(location: location, radius: 3000) {
+                if $0 == true  {
+                    print("Exit")
+                }else if $1 == true {
+                    print("Enter")
+                }
+            }
         }
-        
-
-        
         
     }
 

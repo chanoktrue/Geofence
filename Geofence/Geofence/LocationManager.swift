@@ -12,14 +12,16 @@ class LocationManager: NSObject {
     
     static let shared = LocationManager()
     let locationManager = CLLocationManager()
-    var completion: ((CLLocation) -> ())?
+    
+    var completionManager: ((CLLocation) -> ())?
+    var completionGeofence: ((Bool, Bool) -> ())?
 }
 
 // MARK: - Location Manger
 extension LocationManager: CLLocationManagerDelegate {
 
     public func getUserLocation(completion: @escaping (CLLocation) -> ()) {
-        self.completion = completion
+        self.completionManager = completion
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
@@ -29,7 +31,7 @@ extension LocationManager: CLLocationManagerDelegate {
         guard let location = locations.first else {
             return
         }
-        completion?(location)
+        completionManager?(location)
         locationManager.stopUpdatingLocation()
     }
         
@@ -39,7 +41,8 @@ extension LocationManager: CLLocationManagerDelegate {
 
 extension LocationManager {
     
-    public func addGeofence(location: CLLocation, radius: CLLocationDistance) {
+    public func addGeofence(location: CLLocation, radius: CLLocationDistance, completion: @escaping (Bool, Bool) -> ()) {
+        self.completionGeofence = completion
         let center: CLLocationCoordinate2D = location.coordinate
         let geofence = CLCircularRegion(center: center, radius: radius, identifier: "notifyWhenEnter")
         geofence.notifyOnExit = true
@@ -48,11 +51,11 @@ extension LocationManager {
     }
     
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        print("Exit")
+        completionGeofence?(true, false)
     }
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        print("Enter")
+        completionGeofence?(false, true)
     }
 }
 
