@@ -8,13 +8,17 @@
 import Foundation
 import CoreLocation
 
+enum GeofenceType: String {
+    case exit, enter
+}
+
 class LocationManager: NSObject {
     
     static let shared = LocationManager()
     let locationManager = CLLocationManager()
     
     var completionManager: ((CLLocation) -> ())?
-    var completionGeofence: ((Bool, Bool) -> ())?
+    var completionGeofence: ((GeofenceType) -> ())?
 }
 
 // MARK: - Location Manger
@@ -41,7 +45,7 @@ extension LocationManager: CLLocationManagerDelegate {
 
 extension LocationManager {
     
-    public func addGeofence(location: CLLocation, radius: CLLocationDistance, completion: @escaping (Bool, Bool) -> ()) {
+    public func addGeofence(location: CLLocation, radius: CLLocationDistance, completion: @escaping ((GeofenceType) ->())) {
         self.completionGeofence = completion
         let center: CLLocationCoordinate2D = location.coordinate
         let geofence = CLCircularRegion(center: center, radius: radius, identifier: "notifyWhenEnter")
@@ -51,11 +55,11 @@ extension LocationManager {
     }
     
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        completionGeofence?(true, false)
+        completionGeofence?(.exit)
     }
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        completionGeofence?(false, true)
+        completionGeofence?(.enter)
     }
 }
 

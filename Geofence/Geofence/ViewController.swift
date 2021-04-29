@@ -31,11 +31,7 @@ class ViewController: UIViewController {
             
             // MARK: - Geofence
             LocationManager.shared.addGeofence(location: location, radius: 3000) {
-                if $0 == true  {
-                    print("Exit")
-                }else if $1 == true {
-                    print("Enter")
-                }
+                print($0.rawValue)
             }
         }
         
