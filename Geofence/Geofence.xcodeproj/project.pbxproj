@@ -13,6 +13,7 @@
 		CD5C89DD263A48610046C173 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD5C89DB263A48610046C173 /* Main.storyboard */; };
 		CD5C89DF263A48620046C173 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD5C89DE263A48620046C173 /* Assets.xcassets */; };
 		CD5C89E2263A48620046C173 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD5C89E0263A48620046C173 /* LaunchScreen.storyboard */; };
+		CD5C89EA263A49DE0046C173 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5C89E9263A49DE0046C173 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		CD5C89DE263A48620046C173 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD5C89E1263A48620046C173 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CD5C89E3263A48620046C173 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CD5C89E9263A49DE0046C173 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				CD5C89D5263A48610046C173 /* AppDelegate.swift */,
 				CD5C89D7263A48610046C173 /* SceneDelegate.swift */,
 				CD5C89D9263A48610046C173 /* ViewController.swift */,
+				CD5C89E9263A49DE0046C173 /* LocationManager.swift */,
 				CD5C89DB263A48610046C173 /* Main.storyboard */,
 				CD5C89DE263A48620046C173 /* Assets.xcassets */,
 				CD5C89E0263A48620046C173 /* LaunchScreen.storyboard */,
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD5C89EA263A49DE0046C173 /* LocationManager.swift in Sources */,
 				CD5C89DA263A48610046C173 /* ViewController.swift in Sources */,
 				CD5C89D6263A48610046C173 /* AppDelegate.swift in Sources */,
 				CD5C89D8263A48610046C173 /* SceneDelegate.swift in Sources */,

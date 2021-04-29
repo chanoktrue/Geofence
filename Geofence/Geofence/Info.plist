@@ -62,5 +62,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>ต้องการเปิดใช้ GPS เมื่อเปิด App เท่านั้น</string>
 </dict>
 </plist>
