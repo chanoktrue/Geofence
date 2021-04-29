@@ -8,26 +8,52 @@
 import Foundation
 import CoreLocation
 
-class LocationManager: NSObject, CLLocationManagerDelegate {
+class LocationManager: NSObject {
     
     static let shared = LocationManager()
-    
-    let manager = CLLocationManager()
-    
+    let locationManager = CLLocationManager()
     var completion: ((CLLocation) -> ())?
-    
-    public func getUserLocaton(completion: @escaping (CLLocation) -> ()) {
+}
+
+// MARK: - Location Manger
+extension LocationManager: CLLocationManagerDelegate {
+
+    public func getUserLocation(completion: @escaping (CLLocation) -> ()) {
         self.completion = completion
-        manager.requestWhenInUseAuthorization()
-        manager.delegate = self
-        manager.startUpdatingLocation()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
     }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.first else {
             return
         }
         completion?(location)
-        manager.stopUpdatingLocation()
+        locationManager.stopUpdatingLocation()
+    }
+        
+}
+
+// MARK: - Geofence
+
+extension LocationManager {
+    
+    public func addGeofence(location: CLLocation, radius: CLLocationDistance) {
+        let center: CLLocationCoordinate2D = location.coordinate
+        let geofence = CLCircularRegion(center: center, radius: radius, identifier: "notifyWhenEnter")
+        geofence.notifyOnExit = true
+        geofence.notifyOnEntry = true
+        locationManager.startMonitoring(for: geofence)
     }
     
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        print("Exit")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        print("Enter")
+    }
 }
+
+

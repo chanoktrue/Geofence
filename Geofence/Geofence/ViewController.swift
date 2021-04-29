@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 class ViewController: UIViewController {
     
@@ -20,10 +21,35 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(map)
         
-        LocationManager.shared.getUserLocaton { location in
-            print(location)
+
+        LocationManager.shared.getUserLocation { [weak self] location in
+            guard let strongSelf = self else {
+                return
+            }
+            
+            // MARK: - Pin
+            strongSelf.addMapPin(location: location)
+            
+            // MARK: - Geofence
+            LocationManager.shared.addGeofence(location: location, radius: 3000)
         }
+        
+
+        
+        
     }
+
+    private func addMapPin(location: CLLocation) {
+        let pin = MKPointAnnotation()
+        pin.coordinate = location.coordinate
+                    
+        let span = MKCoordinateSpan(latitudeDelta: 0.7, longitudeDelta: 0.7)
+        let region = MKCoordinateRegion(center: location.coordinate, span: span)
+        map.setRegion(region, animated: true)
+        
+        map.addAnnotation(pin)
+    }
+    
 
 
 }
